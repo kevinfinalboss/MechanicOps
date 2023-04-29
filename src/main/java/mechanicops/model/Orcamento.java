@@ -7,14 +7,16 @@ public class Orcamento {
     private String data;
     private String carroModeloAno;
     private float valorConserto;
+    private String situacao;
 
-    public Orcamento(int id, String nomeCliente, String telefoneCliente, String data, String carroModeloAno, float valorConserto) {
+    public Orcamento(int id, String nomeCliente, String telefoneCliente, String data, String carroModeloAno, float valorConserto, String situacao) {
         this.id = id;
         this.nomeCliente = nomeCliente;
         this.telefoneCliente = telefoneCliente;
         this.data = data;
         this.carroModeloAno = carroModeloAno;
         this.valorConserto = valorConserto;
+        this.situacao = situacao;
     }
 
     public int getId() {
@@ -65,6 +67,14 @@ public class Orcamento {
         this.valorConserto = valorConserto;
     }
 
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
+
     @Override
     public String toString() {
         return "Orçamentos em lista por ID:\n" +
@@ -73,7 +83,7 @@ public class Orcamento {
                 "Telefone do Cliente: " + telefoneCliente + "\n" +
                 "Data: " + data + "\n" +
                 "Carro, Modelo e Ano: " + carroModeloAno + "\n" +
-                "Valor do Conserto: R$ " + String.format("%.2f", valorConserto) + "\n";
+                "Valor do Conserto: R$ " + String.format("%.2f", valorConserto) + "\n" +
+                "Situação: " + situacao + "\n";
     }
 }
-

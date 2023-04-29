@@ -33,7 +33,7 @@ public class Menu {
             System.out.println("2) Ver orçamentos");
             System.out.println("3) Fechar orçamento");
             System.out.println("4) Vender produto");
-            System.out.println("5) Verificar produto");
+            System.out.println("5) Ver produtos");
             System.out.println("6) Adicionar Produto");
             System.out.println("7) Sair");
             System.out.print("Digite a opção desejada: ");
@@ -159,5 +159,4 @@ public class Menu {
         System.out.println("Produto adicionado com sucesso!");
     }
 }
-
 

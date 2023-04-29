@@ -1,6 +1,7 @@
 package mechanicops.view;
 
 import mechanicops.controller.GerenciadorProdutos;
+import mechanicops.controller.VerificadorProdutos;
 import mechanicops.model.Produto;
 
 import java.util.Scanner;
@@ -43,7 +44,7 @@ public class Menu {
                     System.out.println("4) Vender produto");
                     break;
                 case 5:
-                    System.out.println("5) Verificar produto");
+                    VerificadorProdutos.verificarProdutos(gerenciadorProdutos.listarProdutos());
                     break;
                 case 6:
                     adicionarProduto();
@@ -72,7 +73,7 @@ public class Menu {
         int quantidade = scanner.nextInt();
         scanner.nextLine();
 
-        int id = gerenciadorProdutos.proximoId();
+        int id = gerenciadorProdutos.proximoId(gerenciadorProdutos.listarProdutos());
         Produto produto = new Produto(id, nome, descricao, valor, quantidade);
         gerenciadorProdutos.adicionarProduto(produto);
 

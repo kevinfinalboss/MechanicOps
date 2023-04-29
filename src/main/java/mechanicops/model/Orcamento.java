@@ -64,4 +64,16 @@ public class Orcamento {
     public void setValorConserto(float valorConserto) {
         this.valorConserto = valorConserto;
     }
+
+    @Override
+    public String toString() {
+        return "Orçamentos em lista por ID:\n" +
+                "ID: " + id + "\n" +
+                "Nome do Cliente: " + nomeCliente + "\n" +
+                "Telefone do Cliente: " + telefoneCliente + "\n" +
+                "Data: " + data + "\n" +
+                "Carro, Modelo e Ano: " + carroModeloAno + "\n" +
+                "Valor do Conserto: R$ " + String.format("%.2f", valorConserto) + "\n";
+    }
 }
+

@@ -27,23 +27,23 @@ public class Menu {
             System.out.println("7) Sair");
             System.out.print("Digite a opção desejada: ");
             opcao = scanner.nextInt();
-            scanner.nextLine(); // Consumir a quebra de linha restante
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
-                    // Implementar novo orçamento
+                    System.out.println("1) Novo orçamento");
                     break;
                 case 2:
-                    // Implementar ver orçamentos
+                    System.out.println("2) Ver orçamentos");
                     break;
                 case 3:
-                    // Implementar fechar orçamento
+                    System.out.println("3) Fechar orçamento");
                     break;
                 case 4:
-                    // Implementar vender produto
+                    System.out.println("4) Vender produto");
                     break;
                 case 5:
-                    // Implementar verificar produto
+                    System.out.println("5) Verificar produto");
                     break;
                 case 6:
                     adicionarProduto();

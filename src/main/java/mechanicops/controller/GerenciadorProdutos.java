@@ -1,79 +1,87 @@
 package mechanicops.controller;
 
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
+import com.google.gson.reflect.TypeToken;
 import mechanicops.model.Produto;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.BufferedWriter;
-
 
 public class GerenciadorProdutos {
-
-    private static final String ARQUIVO_PRODUTOS = "src/main/java/mechanicops/database/produtos.json";
+    private List<Produto> produtos;
+    private Gson gson;
+    private File arquivoProdutos;
 
     public GerenciadorProdutos() {
+        gson = new Gson();
+        produtos = new ArrayList<>();
+        arquivoProdutos = new File("src/main/java/mechanicops/database/produtos.json");
+        if (arquivoProdutos.exists()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(arquivoProdutos))) {
+                Type type = new TypeToken<List<Produto>>(){}.getType();
+                produtos = gson.fromJson(br, type);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                // Cria o diretório se não existir
+                arquivoProdutos.getParentFile().mkdirs();
+                // Cria o arquivo
+                arquivoProdutos.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void adicionarProduto(Produto produto) {
-        try {
-            Gson gson = new Gson();
-            String produtoJson = gson.toJson(produto);
+        produtos.add(produto);
+        salvarProdutos();
+    }
 
-            FileWriter fileWriter = new FileWriter(ARQUIVO_PRODUTOS, true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(produtoJson);
-            bufferedWriter.newLine();
-            bufferedWriter.close();
-            fileWriter.close();
-        } catch (IOException e) {
-            System.err.println("Erro ao adicionar produto: " + e.getMessage());
+    public void removerProduto(int id) {
+        for (Produto produto : produtos) {
+            if (produto.getId() == id) {
+                produtos.remove(produto);
+                salvarProdutos();
+                break;
+            }
         }
     }
 
-    public int proximoId() {
-        int maxId = 0;
-        List<Produto> produtos = listarProdutos();
+    public Produto buscarProduto(int id) {
         for (Produto produto : produtos) {
-            if (produto.getId() > maxId) {
-                maxId = produto.getId();
+            if (produto.getId() == id) {
+                return produto;
             }
         }
-        return maxId + 1;
+        return null;
     }
 
     public List<Produto> listarProdutos() {
-        List<Produto> produtos = new ArrayList<>();
-        try {
-            FileReader fileReader = new FileReader(ARQUIVO_PRODUTOS);
-            JsonReader jsonReader = new JsonReader(fileReader);
-            Gson gson = new Gson();
-
-            jsonReader.beginArray();
-            while (jsonReader.hasNext()) {
-                Produto produto = gson.fromJson(jsonReader, Produto.class);
-                produtos.add(produto);
-            }
-            jsonReader.endArray();
-
-            jsonReader.close();
-            fileReader.close();
-        } catch (IOException e) {
-            System.err.println("Erro ao ler produtos: " + e.getMessage());
-        }
-        return produtos;
+        List<Produto> copiaProdutos = new ArrayList<>(produtos);
+        return copiaProdutos;
     }
 
-    public String listarProdutosFormatado() {
-        StringBuilder sb = new StringBuilder();
-        List<Produto> produtos = listarProdutos();
-        for (Produto produto : produtos) {
-            sb.append(produto.toString()).append("\n");
+    public int proximoId(List<Produto> produtos) {
+        int ultimoId = 0;
+        for (Produto produto : this.produtos) {
+            if (produto.getId() > ultimoId) {
+                ultimoId = produto.getId();
+            }
         }
-        return sb.toString();
+        return ultimoId + 1;
+    }
+
+    private void salvarProdutos() {
+        try (FileWriter fw = new FileWriter(arquivoProdutos);
+             BufferedWriter bw = new BufferedWriter(fw)) {
+            gson.toJson(produtos, bw);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

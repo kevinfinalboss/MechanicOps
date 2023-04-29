@@ -123,8 +123,11 @@ public class Menu {
         float valorConserto = scanner.nextFloat();
         scanner.nextLine();
 
+        System.out.print("Situação (aberto, andamento, fechado): ");
+        String situacao = scanner.nextLine();
+
         int id = gerenciadorOrcamentos.proximoId();
-        Orcamento orcamento = new Orcamento(id, nomeCliente, telefoneCliente, data, carroModeloAno, valorConserto);
+        Orcamento orcamento = new Orcamento(id, nomeCliente, telefoneCliente, data, carroModeloAno, valorConserto, situacao);
         gerenciadorOrcamentos.adicionarOrcamento(orcamento);
 
         System.out.println("Orçamento criado com sucesso!");

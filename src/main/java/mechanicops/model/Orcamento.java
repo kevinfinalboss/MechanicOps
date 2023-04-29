@@ -1,16 +1,14 @@
 package mechanicops.model;
 
-import java.time.LocalDate;
-
 public class Orcamento {
     private int id;
     private String nomeCliente;
     private String telefoneCliente;
-    private LocalDate data;
+    private String data;
     private String carroModeloAno;
     private float valorConserto;
 
-    public Orcamento(int id, String nomeCliente, String telefoneCliente, LocalDate data, String carroModeloAno, float valorConserto) {
+    public Orcamento(int id, String nomeCliente, String telefoneCliente, String data, String carroModeloAno, float valorConserto) {
         this.id = id;
         this.nomeCliente = nomeCliente;
         this.telefoneCliente = telefoneCliente;
@@ -43,11 +41,11 @@ public class Orcamento {
         this.telefoneCliente = telefoneCliente;
     }
 
-    public LocalDate getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(String data) {
         this.data = data;
     }
 

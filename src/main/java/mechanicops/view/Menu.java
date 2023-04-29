@@ -131,7 +131,7 @@ public class Menu {
     }
 
     private void listarOrcamentos() {
-        System.out.println("\nOrçamentos:");
+        System.out.println("\n==========Orçamentos================");
         for (Orcamento orcamento : gerenciadorOrcamentos.listarOrcamentos()) {
             System.out.println(orcamento);
         }
@@ -159,4 +159,3 @@ public class Menu {
         System.out.println("Produto adicionado com sucesso!");
     }
 }
-

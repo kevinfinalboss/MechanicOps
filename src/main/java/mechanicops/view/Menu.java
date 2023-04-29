@@ -6,8 +6,10 @@ import mechanicops.controller.VerificadorProdutos;
 import mechanicops.model.Orcamento;
 import mechanicops.model.Produto;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -22,9 +24,11 @@ public class Menu {
     }
 
     public void exibir() {
+        exibirTelaCarregamento();
+
         int opcao = -1;
         while (opcao != 7) {
-            System.out.println("Menu de Opções:");
+            System.out.println("\nMenu de Opções:");
             System.out.println("1) Novo orçamento");
             System.out.println("2) Ver orçamentos");
             System.out.println("3) Fechar orçamento");
@@ -41,7 +45,7 @@ public class Menu {
                     criarOrcamento();
                     break;
                 case 2:
-                    exibirOrcamentos();
+                    listarOrcamentos();
                     break;
                 case 3:
                     System.out.println("3) Fechar orçamento");
@@ -61,6 +65,44 @@ public class Menu {
                 default:
                     System.out.println("Opção inválida!");
             }
+        }
+    }
+
+    private void exibirTelaCarregamento() {
+        System.out.println("Carregando MechanicOps...");
+        aguardar(1000);
+
+        System.out.println("Carregando componentes...");
+        aguardar(1000);
+
+        System.out.println("Checando conectividade com a internet...");
+        boolean conectado = testarConexaoInternet();
+        if (conectado) {
+            System.out.println("Conectado à internet!");
+        } else {
+            System.out.println("Sem conexão com a internet. A aplicação continuará offline.");
+            System.out.println("Atenção: Algumas funcionalidades podem não funcionar corretamente sem conexão com a internet.");
+        }
+        aguardar(1000);
+
+        System.out.println("\nBem-vindo ao MechanicOps!");
+        aguardar(1000);
+    }
+
+    private boolean testarConexaoInternet() {
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress("www.google.com", 80), 3000);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    private void aguardar(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -88,6 +130,13 @@ public class Menu {
         System.out.println("Orçamento criado com sucesso!");
     }
 
+    private void listarOrcamentos() {
+        System.out.println("\nOrçamentos:");
+        for (Orcamento orcamento : gerenciadorOrcamentos.listarOrcamentos()) {
+            System.out.println(orcamento);
+        }
+    }
+
     private void adicionarProduto() {
         System.out.print("Nome do produto: ");
         String nome = scanner.nextLine();
@@ -109,23 +158,6 @@ public class Menu {
 
         System.out.println("Produto adicionado com sucesso!");
     }
-
-    private void exibirOrcamentos() {
-        List<Orcamento> orcamentos = gerenciadorOrcamentos.listarOrcamentos();
-        if (orcamentos.isEmpty()) {
-            System.out.println("Nenhum orçamento encontrado.");
-        } else {
-            for (Orcamento orcamento : orcamentos) {
-                System.out.println("------------------------------------------------");
-                System.out.println("ID: " + orcamento.getId());
-                System.out.println("Nome do Cliente: " + orcamento.getNomeCliente());
-                System.out.println("Telefone do Cliente: " + orcamento.getTelefoneCliente());
-                System.out.println("Data: " + orcamento.getData());
-                System.out.println("Carro, Modelo e Ano: " + orcamento.getCarroModeloAno());
-                System.out.println("Valor do Conserto: R$" + orcamento.getValorConserto());
-            }
-            System.out.println("------------------------------------------------");
-        }
-    }
 }
+
 

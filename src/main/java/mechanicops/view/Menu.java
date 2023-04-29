@@ -1,23 +1,28 @@
 package mechanicops.view;
 
+import mechanicops.controller.GerenciadorOrcamentos;
 import mechanicops.controller.GerenciadorProdutos;
 import mechanicops.controller.VerificadorProdutos;
+import mechanicops.model.Orcamento;
 import mechanicops.model.Produto;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Menu {
     private Scanner scanner;
     private GerenciadorProdutos gerenciadorProdutos;
+    private GerenciadorOrcamentos gerenciadorOrcamentos;
 
     public Menu() {
         scanner = new Scanner(System.in);
         gerenciadorProdutos = new GerenciadorProdutos();
+        gerenciadorOrcamentos = new GerenciadorOrcamentos();
     }
 
     public void exibir() {
         int opcao = -1;
-        while (opcao != 7) {
+        while (opcao != 8) {
             System.out.println("Menu de Opções:");
             System.out.println("1) Novo orçamento");
             System.out.println("2) Ver orçamentos");
@@ -32,7 +37,7 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    System.out.println("1) Novo orçamento");
+                    criarOrcamento();
                     break;
                 case 2:
                     System.out.println("2) Ver orçamentos");
@@ -56,6 +61,29 @@ public class Menu {
                     System.out.println("Opção inválida!");
             }
         }
+    }
+
+    private void criarOrcamento() {
+        System.out.print("Nome do cliente: ");
+        String nomeCliente = scanner.nextLine();
+
+        System.out.print("Telefone do cliente: ");
+        String telefoneCliente = scanner.nextLine();
+
+        LocalDate data = LocalDate.now();
+
+        System.out.print("Carro, Modelo e Ano: ");
+        String carroModeloAno = scanner.nextLine();
+
+        System.out.print("Valor do conserto: ");
+        float valorConserto = scanner.nextFloat();
+        scanner.nextLine();
+
+        int id = gerenciadorOrcamentos.proximoId();
+        Orcamento orcamento = new Orcamento(id, nomeCliente, telefoneCliente, data, carroModeloAno, valorConserto);
+        gerenciadorOrcamentos.adicionarOrcamento(orcamento);
+
+        System.out.println("Orçamento criado com sucesso!");
     }
 
     private void adicionarProduto() {

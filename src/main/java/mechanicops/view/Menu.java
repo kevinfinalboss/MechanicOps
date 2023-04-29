@@ -1,5 +1,6 @@
 package mechanicops.view;
 
+import mechanicops.controller.AtualizadorOrcamento;
 import mechanicops.controller.GerenciadorOrcamentos;
 import mechanicops.controller.GerenciadorProdutos;
 import mechanicops.controller.VerificadorProdutos;
@@ -16,11 +17,13 @@ public class Menu {
     private Scanner scanner;
     private GerenciadorProdutos gerenciadorProdutos;
     private GerenciadorOrcamentos gerenciadorOrcamentos;
+    private AtualizadorOrcamento atualizadorOrcamento;
 
     public Menu() {
         scanner = new Scanner(System.in);
         gerenciadorProdutos = new GerenciadorProdutos();
         gerenciadorOrcamentos = new GerenciadorOrcamentos();
+        atualizadorOrcamento = new AtualizadorOrcamento();
     }
 
     public void exibir() {
@@ -48,7 +51,7 @@ public class Menu {
                     listarOrcamentos();
                     break;
                 case 3:
-                    System.out.println("3) Fechar orçamento");
+                    fecharOrcamento();
                     break;
                 case 4:
                     System.out.println("4) Vender produto");
@@ -137,6 +140,21 @@ public class Menu {
         System.out.println("\n==========Orçamentos================");
         for (Orcamento orcamento : gerenciadorOrcamentos.listarOrcamentos()) {
             System.out.println(orcamento);
+        }
+    }
+
+    private void fecharOrcamento() {
+        System.out.print("Digite o ID do orçamento que deseja fechar: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Digite a nova situação do orçamento: ");
+        String novaSituacao = scanner.nextLine();
+
+        if (atualizadorOrcamento.atualizarSituacaoOrcamento(id, novaSituacao)) {
+            System.out.println("Orçamento atualizado com sucesso!");
+        } else {
+            System.out.println("Orçamento não encontrado.");
         }
     }
 

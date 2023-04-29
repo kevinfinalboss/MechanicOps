@@ -45,7 +45,7 @@ public class GerenciadorOrcamentos {
         salvarOrcamentos(orcamentos);
     }
 
-    private void salvarOrcamentos(List<Orcamento> orcamentos) {
+    void salvarOrcamentos(List<Orcamento> orcamentos) {
         try (FileWriter writer = new FileWriter(ARQUIVO_ORCAMENTOS)) {
             gson.toJson(orcamentos, writer);
         } catch (IOException e) {

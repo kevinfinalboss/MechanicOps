@@ -7,6 +7,7 @@ import mechanicops.model.Orcamento;
 import mechanicops.model.Produto;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -22,7 +23,7 @@ public class Menu {
 
     public void exibir() {
         int opcao = -1;
-        while (opcao != 8) {
+        while (opcao != 7) {
             System.out.println("Menu de Opções:");
             System.out.println("1) Novo orçamento");
             System.out.println("2) Ver orçamentos");
@@ -40,7 +41,7 @@ public class Menu {
                     criarOrcamento();
                     break;
                 case 2:
-                    System.out.println("2) Ver orçamentos");
+                    exibirOrcamentos();
                     break;
                 case 3:
                     System.out.println("3) Fechar orçamento");
@@ -70,7 +71,8 @@ public class Menu {
         System.out.print("Telefone do cliente: ");
         String telefoneCliente = scanner.nextLine();
 
-        LocalDate data = LocalDate.now();
+        LocalDate localDate = LocalDate.now();
+        String data = localDate.toString();
 
         System.out.print("Carro, Modelo e Ano: ");
         String carroModeloAno = scanner.nextLine();
@@ -107,4 +109,23 @@ public class Menu {
 
         System.out.println("Produto adicionado com sucesso!");
     }
+
+    private void exibirOrcamentos() {
+        List<Orcamento> orcamentos = gerenciadorOrcamentos.listarOrcamentos();
+        if (orcamentos.isEmpty()) {
+            System.out.println("Nenhum orçamento encontrado.");
+        } else {
+            for (Orcamento orcamento : orcamentos) {
+                System.out.println("------------------------------------------------");
+                System.out.println("ID: " + orcamento.getId());
+                System.out.println("Nome do Cliente: " + orcamento.getNomeCliente());
+                System.out.println("Telefone do Cliente: " + orcamento.getTelefoneCliente());
+                System.out.println("Data: " + orcamento.getData());
+                System.out.println("Carro, Modelo e Ano: " + orcamento.getCarroModeloAno());
+                System.out.println("Valor do Conserto: R$" + orcamento.getValorConserto());
+            }
+            System.out.println("------------------------------------------------");
+        }
+    }
 }
+

@@ -1,6 +1,7 @@
 package mechanicops.controller;
 
 import mechanicops.model.Produto;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -53,12 +54,12 @@ public class GerenciadorProdutos {
             String linha;
 
             while ((linha = bufferedReader.readLine()) != null) {
-                String[] partes = linha.split(",");
-                int id = Integer.parseInt(partes[0]);
-                String nome = partes[1];
-                String descricao = partes[2];
-                float valor = Float.parseFloat(partes[3]);
-                int quantidade = Integer.parseInt(partes[4]);
+                JSONObject json = new JSONObject(linha);
+                int id = json.getInt("id");
+                String nome = json.getString("nome");
+                String descricao = json.getString("descricao");
+                float valor = (float) json.getDouble("valor");
+                int quantidade = json.getInt("quantidade");
 
                 Produto produto = new Produto(id, nome, descricao, valor, quantidade);
                 produtos.add(produto);

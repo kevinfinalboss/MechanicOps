@@ -27,9 +27,7 @@ public class GerenciadorProdutos {
             }
         } else {
             try {
-                // Cria o diretório se não existir
                 arquivoProdutos.getParentFile().mkdirs();
-                // Cria o arquivo
                 arquivoProdutos.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();

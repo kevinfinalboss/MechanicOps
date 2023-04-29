@@ -1,43 +1,52 @@
 package mechanicops.view;
 
+import mechanicops.controller.GerenciadorProdutos;
+import mechanicops.model.Produto;
+
 import java.util.Scanner;
 
 public class Menu {
+    private Scanner scanner;
+    private GerenciadorProdutos gerenciadorProdutos;
+
+    public Menu() {
+        scanner = new Scanner(System.in);
+        gerenciadorProdutos = new GerenciadorProdutos();
+    }
 
     public void exibir() {
-        Scanner scanner = new Scanner(System.in);
-        int opcao;
-
-        do {
-            System.out.println("===== MechanicOps =====");
+        int opcao = -1;
+        while (opcao != 7) {
+            System.out.println("Menu de Opções:");
             System.out.println("1) Novo orçamento");
             System.out.println("2) Ver orçamentos");
             System.out.println("3) Fechar orçamento");
             System.out.println("4) Vender produto");
             System.out.println("5) Verificar produto");
-            System.out.println("6) Adicionar produto");
+            System.out.println("6) Adicionar Produto");
             System.out.println("7) Sair");
-            System.out.print("Escolha uma opção: ");
+            System.out.print("Digite a opção desejada: ");
             opcao = scanner.nextInt();
+            scanner.nextLine(); // Consumir a quebra de linha restante
 
             switch (opcao) {
                 case 1:
-                    System.out.println("1) Novo orçamento");
+                    // Implementar novo orçamento
                     break;
                 case 2:
-                    System.out.println("2) Ver orçamentos");
+                    // Implementar ver orçamentos
                     break;
                 case 3:
-                    System.out.println("3) Fechar orçamento");
+                    // Implementar fechar orçamento
                     break;
                 case 4:
-                    System.out.println("4) Vender produto");
+                    // Implementar vender produto
                     break;
                 case 5:
-                    System.out.println("5) Verificar produto");
+                    // Implementar verificar produto
                     break;
                 case 6:
-                    System.out.println("6) Adicionar produto");
+                    adicionarProduto();
                     break;
                 case 7:
                     System.out.println("Saindo...");
@@ -45,8 +54,28 @@ public class Menu {
                 default:
                     System.out.println("Opção inválida!");
             }
+        }
+    }
 
-        } while (opcao != 7);
-        scanner.close();
+    private void adicionarProduto() {
+        System.out.print("Nome do produto: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("Descrição do produto: ");
+        String descricao = scanner.nextLine();
+
+        System.out.print("Valor do produto: ");
+        float valor = scanner.nextFloat();
+        scanner.nextLine();
+
+        System.out.print("Quantidade disponível: ");
+        int quantidade = scanner.nextInt();
+        scanner.nextLine();
+
+        int id = gerenciadorProdutos.proximoId();
+        Produto produto = new Produto(id, nome, descricao, valor, quantidade);
+        gerenciadorProdutos.adicionarProduto(produto);
+
+        System.out.println("Produto adicionado com sucesso!");
     }
 }

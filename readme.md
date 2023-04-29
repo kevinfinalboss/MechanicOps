@@ -1,7 +1,7 @@
 
 # MechanicOps
 
-MechanicOps é um sistema de gerenciamento de oficinas simples e eficiente, construído com Java, que oferece uma experiência aprimorada para o usuário. Ele permite que os usuários gerenciem orçamentos, vendam produtos e verifiquem informações de produtos através de um menu de linha de comando intuitivo.
+MechanicOps é um sistema de gerenciamento de oficinas simples e eficiente em command line, construído com Java, que oferece uma experiência aprimorada para o usuário. Ele permite que os usuários gerenciem orçamentos, vendam produtos e verifiquem informações de produtos através de um menu de linha de comando intuitivo.
 MechanicOps foi projetado com foco na simplicidade e na usabilidade, tornando-o uma ferramenta indispensável para oficinas de todos os portes.
 
 

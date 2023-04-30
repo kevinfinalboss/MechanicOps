@@ -1,16 +1,16 @@
 package mechanicops.view;
 
-import mechanicops.controller.AtualizadorOrcamento;
-import mechanicops.controller.GerenciadorOrcamentos;
-import mechanicops.controller.GerenciadorProdutos;
-import mechanicops.controller.VerificadorProdutos;
+import mechanicops.controller.*;
 import mechanicops.model.Orcamento;
 import mechanicops.model.Produto;
+import mechanicops.model.Venda;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -18,19 +18,21 @@ public class Menu {
     private GerenciadorProdutos gerenciadorProdutos;
     private GerenciadorOrcamentos gerenciadorOrcamentos;
     private AtualizadorOrcamento atualizadorOrcamento;
-
+    private RegistroVendas registroVendas;
     public Menu() {
         scanner = new Scanner(System.in);
         gerenciadorProdutos = new GerenciadorProdutos();
         gerenciadorOrcamentos = new GerenciadorOrcamentos();
         atualizadorOrcamento = new AtualizadorOrcamento();
+        registroVendas = new RegistroVendas();
     }
 
     public void exibir() {
         exibirTelaCarregamento();
+        verificarEstoqueBaixo();
 
         int opcao = -1;
-        while (opcao != 7) {
+        while (opcao != 8) {
             System.out.println("\nMenu de Opções:");
             System.out.println("1) Novo orçamento");
             System.out.println("2) Ver orçamentos");
@@ -38,7 +40,8 @@ public class Menu {
             System.out.println("4) Vender produto");
             System.out.println("5) Ver produtos");
             System.out.println("6) Adicionar Produto");
-            System.out.println("7) Sair");
+            System.out.println("7) Listar todas as vendas");
+            System.out.println("8) Sair");
             System.out.print("Digite a opção desejada: ");
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -54,7 +57,7 @@ public class Menu {
                     fecharOrcamento();
                     break;
                 case 4:
-                    System.out.println("4) Vender produto");
+                    venderProduto();
                     break;
                 case 5:
                     VerificadorProdutos.verificarProdutos(gerenciadorProdutos.listarProdutos());
@@ -63,6 +66,9 @@ public class Menu {
                     adicionarProduto();
                     break;
                 case 7:
+                    listarVendas();
+                    break;
+                case 8:
                     System.out.println("Saindo...");
                     break;
                 default:
@@ -106,6 +112,16 @@ public class Menu {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void verificarEstoqueBaixo() {
+        List<Produto> produtos = gerenciadorProdutos.listarProdutos();
+        for (Produto produto : produtos) {
+            if (produto.getQuantidade() < 5) {
+                System.out.println("Atenção! Produto com estoque baixo:");
+                System.out.println(produto);
+            }
         }
     }
 
@@ -178,5 +194,48 @@ public class Menu {
         gerenciadorProdutos.adicionarProduto(produto);
 
         System.out.println("Produto adicionado com sucesso!");
+    }
+
+    private void venderProduto() {
+        System.out.print("Digite o ID do produto que foi vendido: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Produto produto = gerenciadorProdutos.buscarProdutoPorId(id);
+        if (produto == null) {
+            System.out.println("Produto não encontrado.");
+            return;
+        }
+
+        System.out.print("Nome do cliente: ");
+        String nomeCliente = scanner.nextLine();
+
+        System.out.print("Forma de pagamento: ");
+        String formaPagamento = scanner.nextLine();
+
+        System.out.print("Nome do vendedor: ");
+        String nomeVendedor = scanner.nextLine();
+
+        float valorPago = produto.getValor();
+        if (gerenciadorProdutos.venderProduto(id)) {
+            LocalDateTime dataHoraVenda = LocalDateTime.now();
+            Produto produtoVendido = new Produto(produto.getId(), produto.getNome(), produto.getDescricao(), produto.getValor(), 1);
+            Venda venda = new Venda(id, nomeCliente, nomeVendedor, dataHoraVenda, produtoVendido, formaPagamento);
+            registroVendas.adicionarVenda(venda);
+            System.out.println("Venda realizada com sucesso!");
+        } else {
+            System.out.println("Não foi possível realizar a venda.");
+        }
+    }
+    private void listarVendas() {
+        List<Venda> vendas = RegistroVendas.carregarVendas();
+        if (vendas.isEmpty()) {
+            System.out.println("Nenhuma venda foi registrada.");
+        } else {
+            System.out.println("\n========== Vendas Registradas ==========");
+            for (Venda venda : vendas) {
+                System.out.println(venda);
+            }
+        }
     }
 }

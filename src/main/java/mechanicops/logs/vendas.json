@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "nomeVendedor": "Kevin",
+    "nomeCliente": "Gomes",
+    "dataHoraVenda": "2023-04-29T22:55:29.9285453",
+    "produto": {
+      "id": 1,
+      "nome": "Kit Embreagem Completo 1.4 Montana 1.4 Celta",
+      "descricao": "KIT DE EMBREAGEM PLATO + DISCO + ROLAMENTO PARA MOTORES 1.4 FLEX ORIGINAL GM",
+      "valor": 689.0,
+      "quantidade": 1
+    },
+    "formaPagamento": "Pix"
+  }
+]

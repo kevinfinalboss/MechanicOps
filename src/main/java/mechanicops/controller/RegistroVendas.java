@@ -11,14 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegistroVendas {
+
+
     private static final String PASTA_LOGS = "src/main/java/mechanicops/logs";
     private static final String ARQUIVO_VENDAS = PASTA_LOGS + "/vendas.json";
     private List<Venda> vendas;
 
     public RegistroVendas() {
-        vendas = carregarVendas();
+        this.vendas = carregarVendas();
     }
 
+    public int proximoId() {
+        int maxId = 0;
+        for (Venda venda : vendas) {
+            if (venda.getId() > maxId) {
+                maxId = venda.getId();
+            }
+        }
+        return maxId + 1;
+    }
     public List<Venda> getVendas() {
         return vendas;
     }
@@ -47,6 +58,9 @@ public class RegistroVendas {
             Type type = new TypeToken<List<Venda>>() {
             }.getType();
             List<Venda> vendas = gson.fromJson(reader, type);
+            if (vendas == null) {
+                vendas = new ArrayList<>();
+            }
             return vendas;
         } catch (IOException e) {
             e.printStackTrace();

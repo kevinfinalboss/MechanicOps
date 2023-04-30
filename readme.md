@@ -50,6 +50,10 @@ Execute a aplicação com o seguinte comando:
 
 ## FAQ
 
+#### O que é a aplicação MechanicOps?
+
+MechanicOps é uma aplicação desenvolvida para gerenciar produtos, orçamentos e vendas em uma oficina mecânica. A aplicação permite que os usuários criem e gerenciem orçamentos, produtos e vendas de maneira simples e eficiente.
+
 #### Como é feita a interação com o usuário na aplicação?
 
 A interação com o usuário é feita principalmente através da classe Menu. Essa classe exibe um menu de opções ao usuário e aguarda a entrada do usuário para executar a ação correspondente. As entradas do usuário são lidas através do objeto Scanner. Algumas outras classes, como VerificadorProdutos, também interagem com o usuário em certas partes da aplicação.

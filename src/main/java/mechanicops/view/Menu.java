@@ -198,10 +198,10 @@ public class Menu {
 
     private void venderProduto() {
         System.out.print("Digite o ID do produto que foi vendido: ");
-        int id = scanner.nextInt();
+        int idProduto = scanner.nextInt();
         scanner.nextLine();
 
-        Produto produto = gerenciadorProdutos.buscarProdutoPorId(id);
+        Produto produto = gerenciadorProdutos.buscarProdutoPorId(idProduto);
         if (produto == null) {
             System.out.println("Produto não encontrado.");
             return;
@@ -217,10 +217,11 @@ public class Menu {
         String nomeVendedor = scanner.nextLine();
 
         float valorPago = produto.getValor();
-        if (gerenciadorProdutos.venderProduto(id)) {
+        if (gerenciadorProdutos.venderProduto(idProduto)) {
             LocalDateTime dataHoraVenda = LocalDateTime.now();
             Produto produtoVendido = new Produto(produto.getId(), produto.getNome(), produto.getDescricao(), produto.getValor(), 1);
-            Venda venda = new Venda(id, nomeCliente, nomeVendedor, dataHoraVenda, produtoVendido, formaPagamento);
+            int idVenda = registroVendas.proximoId();
+            Venda venda = new Venda(idVenda, nomeCliente, nomeVendedor, dataHoraVenda, produtoVendido, formaPagamento);
             registroVendas.adicionarVenda(venda);
             System.out.println("Venda realizada com sucesso!");
         } else {

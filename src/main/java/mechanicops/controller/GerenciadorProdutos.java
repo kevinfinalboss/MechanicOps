@@ -10,47 +10,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GerenciadorProdutos {
-    private List<Produto> produtos;
-    private Gson gson;
-    private File arquivoProdutos;
+    private static final String ARQUIVO_PRODUTOS = "src/main/java/mechanicops/database/produtos.json";
 
-    public GerenciadorProdutos() {
-        gson = new Gson();
-        produtos = new ArrayList<>();
-        arquivoProdutos = new File("src/main/java/mechanicops/database/produtos.json");
-        if (arquivoProdutos.exists()) {
-            try (BufferedReader br = new BufferedReader(new FileReader(arquivoProdutos))) {
-                Type type = new TypeToken<List<Produto>>(){}.getType();
-                produtos = gson.fromJson(br, type);
-            } catch (IOException e) {
-                e.printStackTrace();
+    public List<Produto> listarProdutos() {
+        List<Produto> produtos = new ArrayList<>();
+
+        try {
+            FileReader reader = new FileReader(ARQUIVO_PRODUTOS);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+
+            Gson gson = new Gson();
+            Type type = new TypeToken<ArrayList<Produto>>(){}.getType();
+            produtos = gson.fromJson(bufferedReader, type);
+
+            if (produtos == null) {
+                produtos = new ArrayList<>();
             }
-        } else {
-            try {
-                arquivoProdutos.getParentFile().mkdirs();
-                arquivoProdutos.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            bufferedReader.close();
+            reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Arquivo de produtos não encontrado. Um novo arquivo será criado.");
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo de produtos.");
+        }
+
+        return produtos;
+    }
+
+    public int proximoId(List<Produto> produtos) {
+        int maxId = 0;
+        for (Produto produto : produtos) {
+            if (produto.getId() > maxId) {
+                maxId = produto.getId();
             }
         }
+        return maxId + 1;
     }
 
     public void adicionarProduto(Produto produto) {
+        List<Produto> produtos = listarProdutos();
         produtos.add(produto);
-        salvarProdutos();
+        salvarProdutos(produtos);
     }
 
-    public void removerProduto(int id) {
-        for (Produto produto : produtos) {
-            if (produto.getId() == id) {
-                produtos.remove(produto);
-                salvarProdutos();
-                break;
-            }
-        }
-    }
-
-    public Produto buscarProduto(int id) {
+    public Produto buscarProdutoPorId(int id) {
+        List<Produto> produtos = listarProdutos();
         for (Produto produto : produtos) {
             if (produto.getId() == id) {
                 return produto;
@@ -59,27 +64,38 @@ public class GerenciadorProdutos {
         return null;
     }
 
-    public List<Produto> listarProdutos() {
-        List<Produto> copiaProdutos = new ArrayList<>(produtos);
-        return copiaProdutos;
-    }
+    public boolean venderProduto(int id) {
+        List<Produto> produtos = listarProdutos();
+        boolean produtoVendido = false;
 
-    public int proximoId(List<Produto> produtos) {
-        int ultimoId = 0;
-        for (Produto produto : this.produtos) {
-            if (produto.getId() > ultimoId) {
-                ultimoId = produto.getId();
+        for (Produto produto : produtos) {
+            if (produto.getId() == id) {
+                if (produto.getQuantidade() > 0) {
+                    produto.setQuantidade(produto.getQuantidade() - 1);
+                    salvarProdutos(produtos);
+                    produtoVendido = true;
+                } else {
+                    System.out.println("Produto esgotado.");
+                }
+                break;
             }
         }
-        return ultimoId + 1;
+
+        return produtoVendido;
     }
 
-    private void salvarProdutos() {
-        try (FileWriter fw = new FileWriter(arquivoProdutos);
-             BufferedWriter bw = new BufferedWriter(fw)) {
-            gson.toJson(produtos, bw);
+    private void salvarProdutos(List<Produto> produtos) {
+        try {
+            FileWriter writer = new FileWriter(ARQUIVO_PRODUTOS);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+            Gson gson = new Gson();
+            gson.toJson(produtos, bufferedWriter);
+
+            bufferedWriter.close();
+            writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao salvar o arquivo de produtos.");
         }
     }
 }

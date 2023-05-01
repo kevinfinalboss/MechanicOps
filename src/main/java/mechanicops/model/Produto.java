@@ -57,12 +57,8 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "{" +
-                "\"id\": " + id + "," +
-                "\"nome\": \"" + nome + "\"," +
-                "\"descricao\": \"" + descricao + "\"," +
-                "\"valor\": " + valor + "," +
-                "\"quantidade\": " + quantidade +
-                "}";
+        return String.format("ID: %d | Nome: %s | Descrição: %s | Valor: %.2f | Quantidade: %d",
+                id, nome, descricao, valor, quantidade);
     }
+
 }

@@ -69,7 +69,7 @@ public class Menu {
                     listarVendas();
                     break;
                 case 8:
-                    System.out.println("Saindo...");
+                    encerrarPrograma();
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -79,10 +79,10 @@ public class Menu {
 
     private void exibirTelaCarregamento() {
         System.out.println("Carregando MechanicOps...");
-        aguardar(1000);
+        aguardar(500);
 
         System.out.println("Carregando componentes...");
-        aguardar(1000);
+        aguardar(500);
 
         System.out.println("Checando conectividade com a internet...");
         boolean conectado = testarConexaoInternet();
@@ -92,10 +92,10 @@ public class Menu {
             System.out.println("Sem conexão com a internet. A aplicação continuará offline.");
             System.out.println("Atenção: Algumas funcionalidades podem não funcionar corretamente sem conexão com a internet.");
         }
-        aguardar(1000);
+        aguardar(500);
 
         System.out.println("\nBem-vindo ao MechanicOps!");
-        aguardar(1000);
+        aguardar(500);
     }
 
     private boolean testarConexaoInternet() {
@@ -119,11 +119,12 @@ public class Menu {
         List<Produto> produtos = gerenciadorProdutos.listarProdutos();
         for (Produto produto : produtos) {
             if (produto.getQuantidade() < 5) {
-                System.out.println("Atenção! Produto com estoque baixo:");
-                System.out.println(produto);
+                System.out.println("\nAtenção! Produto com estoque baixo:");
+                System.out.println(produto.toString());
             }
         }
     }
+
 
     private void criarOrcamento() {
         System.out.print("Nome do cliente: ");
@@ -239,4 +240,22 @@ public class Menu {
             }
         }
     }
+
+    private void encerrarPrograma() {
+        System.out.println("Salvando orçamentos...");
+        aguardar(500);
+
+        System.out.println("Salvando produtos...");
+        aguardar(500);
+
+        System.out.println("Salvando logs...");
+        aguardar(500);
+
+        System.out.println("Encerrando conexão com o banco de dados...");
+        aguardar(500);
+
+        System.out.println("Encerrando programa...");
+        aguardar(500);
+    }
+
 }

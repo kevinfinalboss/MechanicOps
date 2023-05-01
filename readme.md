@@ -10,7 +10,7 @@ MechanicOps foi projetado com foco na simplicidade e na usabilidade, tornando-o 
 - Gerenciamento de orçamentos.
 - Sistema de gerenciamento de estoque.
 - Vendas de produto.
-- Envio de email quando uma venda for concretizada.
+- Envio de email quando uma venda for concretizada. (Em desenvolvimento.)
 - Logs, saiba o que foi vendido, quem vendeu e quando vendeu.
 - Sistema de aviso quando produtos estiverem em poucas quantidades.
 

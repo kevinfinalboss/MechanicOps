@@ -33,7 +33,7 @@ public class Menu {
         verificarEstoqueBaixo();
 
         int opcao = -1;
-        while (opcao != 3) {
+        while (opcao != 4) {
             System.out.println("\nMenu de Opções:");
             System.out.println("1) Orçamentos");
             System.out.println("2) Produtos");

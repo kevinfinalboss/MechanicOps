@@ -37,7 +37,8 @@ public class Menu {
             System.out.println("\nMenu de Opções:");
             System.out.println("1) Orçamentos");
             System.out.println("2) Produtos");
-            System.out.println("3) Sair");
+            System.out.println("3) Vendas");
+            System.out.println("4) Sair");
             System.out.print("Digite a opção desejada: ");
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -50,6 +51,9 @@ public class Menu {
                     menuProdutos();
                     break;
                 case 3:
+                    menuVendas();
+                    break;
+                case 4:
                     encerrarPrograma();
                     break;
                 default:
@@ -111,6 +115,28 @@ public class Menu {
                     venderProduto();
                     break;
                 case 4:
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+    }
+
+    private void menuVendas() {
+        int opcao = -1;
+        while (opcao != 2) {
+            System.out.println("\nMenu Vendas:");
+            System.out.println("1) Ver logs de vendas");
+            System.out.println("2) Voltar");
+            System.out.print("Digite a opção desejada: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    listarVendas();
+                    break;
+                case 2:
                     break;
                 default:
                     System.out.println("Opção inválida!");

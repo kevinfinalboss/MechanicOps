@@ -34,6 +34,7 @@ public class Menu {
 
         int opcao = -1;
         while (opcao != 4) {
+            limparTela();
             System.out.println("\nMenu de Opções:");
             System.out.println("1) Orçamentos");
             System.out.println("2) Produtos");
@@ -65,6 +66,7 @@ public class Menu {
     private void menuOrcamentos() {
         int opcao = -1;
         while (opcao != 4) {
+            limparTela();
             System.out.println("\nMenu Orçamentos:");
             System.out.println("1) Novo orçamento");
             System.out.println("2) Ver orçamentos");
@@ -96,6 +98,7 @@ public class Menu {
     private void menuProdutos() {
         int opcao = -1;
         while (opcao != 4) {
+            limparTela();
             System.out.println("\nMenu Produtos:");
             System.out.println("1) Adicionar produto");
             System.out.println("2) Ver produtos");
@@ -127,6 +130,7 @@ public class Menu {
     private void menuVendas() {
         int opcao = -1;
         while (opcao != 2) {
+            limparTela();
             System.out.println("\nMenu Vendas:");
             System.out.println("1) Ver logs de vendas");
             System.out.println("2) Voltar");
@@ -227,6 +231,19 @@ public class Menu {
         System.out.println("\n==========Orçamentos================");
         for (Orcamento orcamento : gerenciadorOrcamentos.listarOrcamentos()) {
             System.out.println(orcamento);
+        }
+    }
+
+    private void limparTela() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

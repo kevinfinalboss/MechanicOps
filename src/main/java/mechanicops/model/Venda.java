@@ -89,13 +89,13 @@ public class Venda {
 
     @Override
     public String toString() {
-        return "Venda{" +
-                "id=" + id +
-                ", nomeVendedor='" + nomeVendedor + '\'' +
-                ", nomeCliente='" + nomeCliente + '\'' +
-                ", dataHoraVenda=" + dataHoraVenda +
-                ", produto=" + produto +
-                ", formaPagamento='" + formaPagamento + '\'' +
-                '}';
+        return "Venda {\n" +
+                "\tID: " + id + ",\n" +
+                "\tNome Vendedor: '" + nomeVendedor + "',\n" +
+                "\tNome Cliente: '" + nomeCliente + "',\n" +
+                "\tData e Hora da Venda: " + dataHoraVenda + ",\n" +
+                "\tProduto: \n" + produto.toString().replaceAll("(?m)^", "\t\t") + ",\n" +
+                "\tForma de Pagamento: '" + formaPagamento + "'\n" +
+                "}";
     }
 }

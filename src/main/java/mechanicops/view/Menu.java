@@ -19,6 +19,7 @@ public class Menu {
     private GerenciadorOrcamentos gerenciadorOrcamentos;
     private AtualizadorOrcamento atualizadorOrcamento;
     private RegistroVendas registroVendas;
+
     public Menu() {
         scanner = new Scanner(System.in);
         gerenciadorProdutos = new GerenciadorProdutos();
@@ -32,16 +33,39 @@ public class Menu {
         verificarEstoqueBaixo();
 
         int opcao = -1;
-        while (opcao != 8) {
+        while (opcao != 3) {
             System.out.println("\nMenu de Opções:");
+            System.out.println("1) Orçamentos");
+            System.out.println("2) Produtos");
+            System.out.println("3) Sair");
+            System.out.print("Digite a opção desejada: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    menuOrcamentos();
+                    break;
+                case 2:
+                    menuProdutos();
+                    break;
+                case 3:
+                    encerrarPrograma();
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+    }
+
+    private void menuOrcamentos() {
+        int opcao = -1;
+        while (opcao != 4) {
+            System.out.println("\nMenu Orçamentos:");
             System.out.println("1) Novo orçamento");
             System.out.println("2) Ver orçamentos");
-            System.out.println("3) Fechar orçamento");
-            System.out.println("4) Vender produto");
-            System.out.println("5) Ver produtos");
-            System.out.println("6) Adicionar Produto");
-            System.out.println("7) Listar todas as vendas");
-            System.out.println("8) Sair");
+            System.out.println("3) Fechar orçamentos");
+            System.out.println("4) Voltar");
             System.out.print("Digite a opção desejada: ");
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -57,19 +81,36 @@ public class Menu {
                     fecharOrcamento();
                     break;
                 case 4:
-                    venderProduto();
                     break;
-                case 5:
-                    VerificadorProdutos.verificarProdutos(gerenciadorProdutos.listarProdutos());
-                    break;
-                case 6:
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+    }
+
+    private void menuProdutos() {
+        int opcao = -1;
+        while (opcao != 4) {
+            System.out.println("\nMenu Produtos:");
+            System.out.println("1) Adicionar produto");
+            System.out.println("2) Ver produtos");
+            System.out.println("3) Vender produto");
+            System.out.println("4) Voltar");
+            System.out.print("Digite a opção desejada: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
                     adicionarProduto();
                     break;
-                case 7:
-                    listarVendas();
+                case 2:
+                    VerificadorProdutos.verificarProdutos(gerenciadorProdutos.listarProdutos());
                     break;
-                case 8:
-                    encerrarPrograma();
+                case 3:
+                    venderProduto();
+                    break;
+                case 4:
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -257,5 +298,4 @@ public class Menu {
         System.out.println("Encerrando programa...");
         aguardar(500);
     }
-
 }

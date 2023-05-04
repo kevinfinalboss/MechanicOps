@@ -85,6 +85,7 @@ public class Menu {
                     fecharOrcamento();
                     break;
                 case 4:
+                    System.out.println("Voltando ao menu principal");
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -115,6 +116,7 @@ public class Menu {
                     venderProduto();
                     break;
                 case 4:
+                    System.out.println("Voltando ao menu principal");
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -137,6 +139,7 @@ public class Menu {
                     listarVendas();
                     break;
                 case 2:
+                    System.out.println("Voltando ao menu principal");
                     break;
                 default:
                     System.out.println("Opção inválida!");

@@ -34,7 +34,6 @@ public class Menu {
 
         int opcao = -1;
         while (opcao != 4) {
-            limparTela();
             System.out.println("\nMenu de Opções:");
             System.out.println("1) Orçamentos");
             System.out.println("2) Produtos");
@@ -98,7 +97,6 @@ public class Menu {
     private void menuProdutos() {
         int opcao = -1;
         while (opcao != 4) {
-            limparTela();
             System.out.println("\nMenu Produtos:");
             System.out.println("1) Adicionar produto");
             System.out.println("2) Ver produtos");

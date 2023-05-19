@@ -8,7 +8,7 @@ public class Venda {
     private int id;
     private String nomeVendedor;
     private String nomeCliente;
-    private String dataHoraVenda; // Altere o tipo para String
+    private String dataHoraVenda;
     private Produto produto;
     private String formaPagamento;
 
@@ -16,7 +16,7 @@ public class Venda {
         this.id = id;
         this.nomeVendedor = nomeVendedor;
         this.nomeCliente = nomeCliente;
-        this.dataHoraVenda = dataHoraVenda.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME); // Converta LocalDateTime para String
+        this.dataHoraVenda = dataHoraVenda.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         this.produto = produto;
         this.formaPagamento = formaPagamento;
     }
@@ -46,11 +46,11 @@ public class Venda {
     }
 
     public LocalDateTime getDataHoraVenda() {
-        return LocalDateTime.parse(dataHoraVenda, DateTimeFormatter.ISO_LOCAL_DATE_TIME); // Converta String para LocalDateTime
+        return LocalDateTime.parse(dataHoraVenda, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
 
     public void setDataHoraVenda(LocalDateTime dataHoraVenda) {
-        this.dataHoraVenda = dataHoraVenda.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME); // Converta LocalDateTime para String
+        this.dataHoraVenda = dataHoraVenda.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
 
     public Produto getProduto() {
